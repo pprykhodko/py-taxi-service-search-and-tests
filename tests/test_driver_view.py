@@ -13,7 +13,7 @@ class PublicDriverTest(TestCase):
 
         self.driver = Driver.objects.create(
             username="driver_username",
-            license_number="driver_license_number",
+            license_number="ABC12345",
             first_name="driver_first_name",
             last_name="driver_last_name",
         )
@@ -23,7 +23,7 @@ class PublicDriverTest(TestCase):
         self.assertNotEquals(response.status_code, 200)
 
     def test_detail_login_required(self):
-        response = self.client.get(DRIVER_URL, args=[self.driver.id])
+        response = self.client.get(DRIVER_URL, {"pk": self.driver.id})
         self.assertNotEquals(response.status_code, 200)
 
 
@@ -37,7 +37,7 @@ class PrivateDriverTest(TestCase):
 
     def test_retrieve_drivers(self):
         Driver.objects.create(
-            license_number="driver_license_number",
+            license_number="ABC12345",
             username="driver_username",
             first_name="driver_first_name",
             last_name="driver_last_name",
@@ -57,7 +57,7 @@ class DriverSearchTests(TestCase):
         self.client.force_login(self.user)
 
         Driver.objects.create(
-            license_number="driver_license_number",
+            license_number="ABC12345",
             username="driver_username",
             first_name="driver_first_name",
             last_name="driver_last_name",
